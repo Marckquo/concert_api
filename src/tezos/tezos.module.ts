@@ -1,4 +1,7 @@
 import { Module } from '@nestjs/common';
+import { TezosService } from './tezos.service';
 
-@Module({})
+@Module({
+  providers: [TezosService]
+})
 export class TezosModule {}
