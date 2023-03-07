@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TezosModule } from './tezos/tezos.module';
 import { ShowModule } from './show/show.module';
+import { AdminModule } from './admin/admin.module';
 
 const defaultDbConf = {
     host: 'localhost',
@@ -29,6 +30,7 @@ const defaultDbConf = {
       }),
     TezosModule,
     ShowModule,
+    AdminModule,
   ],
   controllers: [AppController],
   providers: [AppService],
