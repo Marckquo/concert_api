@@ -3,6 +3,8 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { TezosModule } from './tezos/tezos.module';
+import { ShowModule } from './show/show.module';
 
 const defaultDbConf = {
     host: 'localhost',
@@ -25,6 +27,8 @@ const defaultDbConf = {
         entities: [],
         synchronize: process.env.DB_SYNC === 'true',
       }),
+    TezosModule,
+    ShowModule,
   ],
   controllers: [AppController],
   providers: [AppService],
