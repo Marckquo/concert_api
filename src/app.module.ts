@@ -7,6 +7,7 @@ import { TezosModule } from './tezos/tezos.module';
 import { ShowModule } from './show/show.module';
 import { AdminModule } from './admin/admin.module';
 import { Admin } from './admin/admin.entity';
+import { Show } from './show/show.entity';
 
 const defaultDbConf = {
     host: 'localhost',
@@ -27,7 +28,8 @@ const defaultDbConf = {
         password: process.env.DB_PASSWORD || defaultDbConf.password,
         database: process.env.DB_NAME || defaultDbConf.database,
         entities: [
-            Admin
+            Admin,
+            Show
         ],
         synchronize: process.env.DB_SYNC === 'true',
       }),
