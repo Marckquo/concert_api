@@ -6,6 +6,8 @@ const PINATA_SECRET_API_KEY = "8517409ccd0bec03944706701d4ed721c96a2ab81411840d5
 @Injectable()
 export class MetadataService {
 
+    
+
     async sendRequestToPinJson(data: string) {
         var axios = require('axios');
 
