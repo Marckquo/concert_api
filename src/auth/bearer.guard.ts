@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 export class BearerGuard implements CanActivate {
     canActivate(
         context: ExecutionContext,
-    ): boolean | Promise<boolean> | Observable<boolean> {
+    ): boolean {
         const request = context.switchToHttp().getRequest();
         const authorizationHeader = request.headers.authorization;
 

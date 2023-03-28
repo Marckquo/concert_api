@@ -1,6 +1,7 @@
 import { Controller, UseGuards, Get, Req } from '@nestjs/common';
 import { AdminService } from './admin.service';
 import { BearerGuard } from '../auth/bearer.guard';
+import { AdminGuard } from '../auth/admin.guard';
 
 @Controller('admin')
 export class AdminController {
