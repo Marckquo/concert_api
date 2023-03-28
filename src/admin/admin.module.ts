@@ -4,9 +4,10 @@ import { Admin } from './admin.entity';
 import { AdminService } from './admin.service';
 import { AdminController } from './admin.controller';
 import { AuthModule } from '../auth/auth.module';
+import { MetadataModule } from '../metadata/metadata.module';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Admin]), forwardRef(() => AuthModule)],
+    imports: [TypeOrmModule.forFeature([Admin]), forwardRef(() => AuthModule), MetadataModule],
     providers: [AdminService],
     controllers: [AdminController],
     exports: [AdminService]
