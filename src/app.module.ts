@@ -9,6 +9,7 @@ import { AdminModule } from './admin/admin.module';
 import { Admin } from './admin/admin.entity';
 import { Show } from './show/show.entity';
 import { MetadataModule } from './metadata/metadata.module';
+import { AuthModule } from './auth/auth.module';
 
 const defaultDbConf = {
     host: 'localhost',
@@ -38,6 +39,7 @@ const defaultDbConf = {
     ShowModule,
     AdminModule,
     MetadataModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

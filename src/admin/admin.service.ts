@@ -19,4 +19,8 @@ export class AdminService {
             walletAddress
         });
     }
+
+    isAdmin(walletAddress: string): Promise<boolean> {
+        return this.findOne(walletAddress).then(admin => !! admin);
+    }
 }
