@@ -8,6 +8,7 @@ import { ShowModule } from './show/show.module';
 import { AdminModule } from './admin/admin.module';
 import { Admin } from './admin/admin.entity';
 import { Show } from './show/show.entity';
+import { MetadataModule } from './metadata/metadata.module';
 
 const defaultDbConf = {
     host: 'localhost',
@@ -36,6 +37,7 @@ const defaultDbConf = {
     TezosModule,
     ShowModule,
     AdminModule,
+    MetadataModule,
   ],
   controllers: [AppController],
   providers: [AppService],
