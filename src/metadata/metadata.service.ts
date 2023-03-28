@@ -6,23 +6,17 @@ const PINATA_SECRET_API_KEY = "8517409ccd0bec03944706701d4ed721c96a2ab81411840d5
 
 @Injectable()
 export class MetadataService {
-
-
-
     sendRequestToPinJson(data: string): Promise<any> {
-        var axios = require('axios');
+        const url = 'https://api.pinata.cloud/pinning/pinJSONToIPFS';
 
-        var config = {
-            method: 'post',
-            url: 'https://api.pinata.cloud/pinning/pinJSONToIPFS',
-            headers: {
-                'Content-Type': 'application/json',
-                'pinata_api_key':  PINATA_API_KEY,
-                'pinata_secret_api_key': PINATA_SECRET_API_KEY
-            },
-            'pinataContent': data
+        const headers = {
+            'Content-Type': 'application/json',
+            'pinata_api_key':  PINATA_API_KEY,
+            'pinata_secret_api_key': PINATA_SECRET_API_KEY
         };
 
-        return axios(config);
+        return axios.post(url, data, {
+            headers
+        });
     }
 }
