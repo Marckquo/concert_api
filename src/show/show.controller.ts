@@ -27,4 +27,12 @@ export class ShowController {
             throw new NotFoundException();
         })
     }
+
+    @Get('')
+    getShows(): Promise<IShow[]> {
+        return this.showService.getShows()
+        .catch(err => {
+            throw new NotFoundException();
+        })
+    }
 }

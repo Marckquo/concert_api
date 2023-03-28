@@ -47,7 +47,19 @@ export class ShowService {
     
             return axios.get(url, {
                 headers
-            }).then(res => res.data);
+            }).then(res => {
+                let iShow = res.data;
+                iShow.id = id;
+
+                return iShow;
+            });
+        })
+    }
+
+    getShows(): Promise<IShow[]> {
+        return this.showRepository.find().then(shows => {
+            const promises = shows.map(show => this.getShowMetadata(show.id));
+            return Promise.all(promises);
         })
     }
 }
