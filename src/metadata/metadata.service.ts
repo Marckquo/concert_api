@@ -9,7 +9,7 @@ export class MetadataService {
 
 
 
-    async sendRequestToPinJson(data: string) {
+    sendRequestToPinJson(data: string): Promise<any> {
         var axios = require('axios');
 
         var config = {
