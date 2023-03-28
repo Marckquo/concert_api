@@ -20,7 +20,7 @@ export class MetadataService {
                 'pinata_api_key':  PINATA_API_KEY,
                 'pinata_secret_api_key': PINATA_SECRET_API_KEY
             },
-            data: data
+            'pinataContent': data
         };
 
         return axios(config);
