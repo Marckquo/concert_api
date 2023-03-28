@@ -1,4 +1,5 @@
 export interface IShow {
+    id?: string
     title: string,
     artist: string,
     capacity: number,
