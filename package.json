@@ -25,7 +25,9 @@
     "@nestjs/core": "^9.0.0",
     "@nestjs/passport": "^9.0.3",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/platform-socket.io": "^9.3.12",
     "@nestjs/typeorm": "^9.0.1",
+    "@nestjs/websockets": "^9.3.12",
     "@taquito/signer": "^15.1.0",
     "@taquito/taquito": "^15.1.0",
     "@taquito/utils": "^15.1.0",
@@ -38,6 +40,8 @@
     "pg": "^8.9.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
+    "socket.io": "^4.6.1",
+    "socket.io-client": "^4.6.1",
     "typeorm": "^0.3.12"
   },
   "devDependencies": {

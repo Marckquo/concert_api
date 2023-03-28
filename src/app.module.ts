@@ -10,6 +10,7 @@ import { Admin } from './admin/admin.entity';
 import { Show } from './show/show.entity';
 import { MetadataModule } from './metadata/metadata.module';
 import { AuthModule } from './auth/auth.module';
+import { EventsGateway } from './ws/events/events.gateway';
 
 const defaultDbConf = {
     host: 'localhost',
@@ -42,6 +43,6 @@ const defaultDbConf = {
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, EventsGateway],
 })
 export class AppModule {}
