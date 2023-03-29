@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Show } from './show.entity';
@@ -12,30 +12,30 @@ export class ShowService {
         @InjectRepository(Show)
         private showRepository: Repository<Show>,
         private readonly metadataService: MetadataService
-    ){}
+    ) { }
 
     createShow(iShow: IShow): Promise<IShow> {
         //TODO: Upload to Tezos
         const showEntity = new Show();
         return this.metadataService.sendRequestToPinJson(iShow)
-        .then(cid => {
-            showEntity.cid = cid;
-            showEntity.contractAddress = '';
-            return this.showRepository.save(showEntity)
-        })
-        .then(savedEntity => {
-            let createdShow = {...iShow};
-            createdShow.id = savedEntity.id;
+            .then(cid => {
+                showEntity.cid = cid;
+                showEntity.contractAddress = '';
+                return this.showRepository.save(showEntity)
+            })
+            .then(savedEntity => {
+                let createdShow = { ...iShow };
+                createdShow.id = savedEntity.id;
 
-            return createdShow;
-        })
+                return createdShow;
+            })
     }
 
     getShowMetadata(id: string): Promise<IShow> {
         return this.showRepository.findOneBy({
             id
         }).then(show => {
-            if (! show){
+            if (!show) {
                 return null;
             }
 
@@ -44,7 +44,7 @@ export class ShowService {
             const headers = {
                 'Content-Type': 'application/json',
             };
-    
+
             return axios.get(url, {
                 headers
             }).then(res => {
@@ -61,5 +61,50 @@ export class ShowService {
             const promises = shows.map(show => this.getShowMetadata(show.id));
             return Promise.all(promises);
         })
+    }
+
+    deleteShow(id: string): Promise<string> {
+        let cid;
+        return this.showRepository.findOneBy({
+            id
+        }).then(show => {
+            if (!show) {
+                throw new NotFoundException();
+            }
+
+            cid = show.cid;
+
+            return this.showRepository.delete({
+                id
+            });
+        })
+            .then(() => {
+                return this.metadataService.sendRequestToUnpinJson(cid);
+            })
+    }
+
+    editShow(id: string, iShow: IShow): Promise<IShow> {
+        let cid;
+        return this.showRepository.findOneBy({
+            id
+        }).then(show => {
+            if (!show) {
+                throw new NotFoundException();
+            }
+
+            cid = show.cid;
+
+            return this.metadataService.sendRequestsToEditJson(cid, iShow);
+        })
+            .then(newCid => {
+                return this.showRepository.update({
+                    id
+                }, {
+                    cid: newCid
+                })
+            })
+            .then(() => {
+                return iShow;
+            })
     }
 }

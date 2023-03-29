@@ -1,4 +1,4 @@
-import { Controller, Post, UseGuards, Req, Body, Get, Param, NotFoundException } from '@nestjs/common';
+import { Controller, Post, UseGuards, Req, Body, Get, Param, NotFoundException, Put, Delete } from '@nestjs/common';
 import { AdminGuard } from '../auth/admin.guard';
 import { IShow } from '../show/show.interface';
 import { ShowService } from './show.service';
@@ -28,8 +28,20 @@ export class ShowController {
         })
     }
 
-    @Get('')
+    @Get()
     getShows(): Promise<IShow[]> {
         return this.showService.getShows();
+    }
+
+    @UseGuards(AdminGuard)
+    @Delete(':id')
+    deleteShow(@Param('id') id: string): Promise<string> {
+        return this.showService.deleteShow(id);
+    }
+
+    @UseGuards(AdminGuard)
+    @Put(':id')
+    updateShow(@Param('id') id: string, @Body() iShow: IShow): Promise<IShow> {
+        return this.showService.editShow(id, iShow);
     }
 }
