@@ -59,6 +59,29 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## Docker
+
+### Build
+
+```bash
+$ docker build --tag justicket-back .
+```
+
+### Run
+
+```bash
+$ docker run --name justicket_back \
+  -p 3000:3000 \
+  -e DB_HOST=<database_host> \
+  -e DB_USER=<database_user> \
+  -e DB_PASSWORD=<database_password> \
+  -e DB_NAME=<database_name> \
+  -e DB_SYNC=<true | false> \
+  -e PINATA_API_KEY=<pinata_api_key> \
+  -e PINATA_SECRET_API_KEY=<pinata_secret_api_key> \
+  -d justicket-back
+```
+
 ## Contact us
 
 - Developer - [Maxence Lequeux](mailto:maxence.lequeux.etu@univ-lille.fr)
