@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Show } from "src/show/show.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Admin {
@@ -7,4 +8,7 @@ export class Admin {
 
     @Column()
     walletAddress: string;
+
+    @OneToMany(() => Show, (show) => show.owner)
+    shows: Show[]
 }

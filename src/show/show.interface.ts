@@ -1,3 +1,5 @@
+import { Admin } from "src/admin/admin.entity"
+
 export interface IShow {
     id?: string
     title: string,
@@ -6,5 +8,6 @@ export interface IShow {
     date: Date,
     place: string,
     priceTezos: number,
-    contractAddress?: string
+    contractAddress?: string,
+    owner: Admin
 }
