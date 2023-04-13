@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { TezosToolkit } from '@taquito/taquito';
 import { validateSignature, verifySignature } from '@taquito/utils';
+import { InMemorySigner } from '@taquito/signer';
+
 
 @Injectable()
 export class TezosService {
@@ -21,4 +23,6 @@ export class TezosService {
                 return false;
         }
     }
+
+
 }
