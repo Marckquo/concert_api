@@ -25,11 +25,11 @@ const defaultDbConf = {
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
         type: 'postgres',
-        host: process.env.DB_HOST || defaultDbConf.host,
-        port: parseInt(process.env.DB_PORT) || defaultDbConf.port,
-        username: process.env.DB_USER || defaultDbConf.username,
-        password: process.env.DB_PASSWORD || defaultDbConf.password,
-        database: process.env.DB_NAME || defaultDbConf.database,
+        host: process.env.DB_HOST ?? defaultDbConf.host,
+        port: parseInt(process.env.DB_PORT) ?? defaultDbConf.port,
+        username: process.env.DB_USER ?? defaultDbConf.username,
+        password: process.env.DB_PASSWORD ?? defaultDbConf.password,
+        database: process.env.DB_NAME ?? defaultDbConf.database,
         entities: [
             Admin,
             Show

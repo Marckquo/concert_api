@@ -5,17 +5,18 @@ import { Show } from './show.entity';
 import { IShow } from './show.interface';
 import axios from 'axios';
 import { MetadataService } from '../metadata/metadata.service';
+import { TezosService } from 'src/tezos/tezos.service';
 
 @Injectable()
 export class ShowService {
     constructor(
         @InjectRepository(Show)
         private showRepository: Repository<Show>,
-        private readonly metadataService: MetadataService
+        private readonly metadataService: MetadataService,
+        private readonly tezosService: TezosService
     ) { }
 
-    createShow(iShow: IShow): Promise<IShow> {
-        //TODO: Upload to Tezos
+    createShow(walletAddress: string, iShow: IShow): Promise<IShow> {
         const showEntity = new Show();
         return this.metadataService.sendRequestToPinJson(iShow)
             .then(cid => {
@@ -26,6 +27,8 @@ export class ShowService {
             .then(savedEntity => {
                 let createdShow = { ...iShow };
                 createdShow.id = savedEntity.id;
+
+                this.tezosService.createShowOnTezos(createdShow.id, createdShow, walletAddress);
 
                 return createdShow;
             })
