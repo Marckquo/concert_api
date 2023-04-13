@@ -5,7 +5,6 @@ import { InMemorySigner } from '@taquito/signer';
 import { IShow } from 'src/show/show.interface';
 import { EventsGateway } from 'src/ws/events/events.gateway';
 
-
 @Injectable()
 export class TezosService {
     constructor(private eventsGateway: EventsGateway){}
