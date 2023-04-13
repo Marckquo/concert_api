@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Admin } from 'src/admin/admin.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 
 @Entity()
 export class Show {
@@ -10,4 +11,7 @@ export class Show {
 
     @Column()
     contractAddress: string;
+    
+    @ManyToOne(() => Admin, (admin) => admin.shows)
+    owner: Admin
 }

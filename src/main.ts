@@ -1,11 +1,15 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { MetadataService } from './metadata/metadata.service';
+import { IoAdapter } from '@nestjs/platform-socket.io';
+import { WsAdapter } from '@nestjs/platform-ws';
 import { TezosToolkit } from '@taquito/taquito';
 import { InMemorySigner } from '@taquito/signer';
 
 async function bootstrap() {
     await createConcert(5, 30, 'tz1hZZPYpPTBZV3SVjGLnWQTcwAHHKGdZzD5');
     const app = await NestFactory.create(AppModule);
+    app.useWebSocketAdapter(new WsAdapter(app));
     await app.listen(3000);
 }
 
