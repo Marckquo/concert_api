@@ -16,11 +16,6 @@ export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   handleConnection(_client: any, ..._args: any[]) {}
   handleDisconnect(_client: any) {}
 
-  @SubscribeMessage('result')
-  handleEvent(@MessageBody() data: any): string {
-    return 'Hello world!';
-  }
-
   private broadcast(result: WsCreationResult){
     this.server.clients.forEach(client => {
       client.send(JSON.stringify({ event: 'result', data: result }));
