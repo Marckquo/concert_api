@@ -6,9 +6,10 @@ import { Show } from './show.entity';
 import { MetadataModule } from '../metadata/metadata.module';
 import { AuthModule } from '../auth/auth.module';
 import { AdminModule } from '../admin/admin.module';
+import { TezosModule } from 'src/tezos/tezos.module';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Show]), MetadataModule, AuthModule, AdminModule],
+    imports: [TypeOrmModule.forFeature([Show]), MetadataModule, AuthModule, AdminModule, TezosModule],
     providers: [ShowService],
     controllers: [ShowController]
 })

@@ -9,8 +9,9 @@ export class ShowController {
 
     @UseGuards(AdminGuard)
     @Post()
-    createShow(@Body() iShow: IShow): Promise<IShow> {
-        return this.showService.createShow(iShow);
+    createShow(@Body() iShow: IShow, @Req() request): Promise<IShow> {
+        const walletAddress = request.token;
+        return this.showService.createShow(walletAddress, iShow);
     }
 
     @Get(':id')

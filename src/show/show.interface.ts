@@ -9,5 +9,4 @@ export interface IShow {
     place: string,
     priceTezos: number,
     contractAddress?: string,
-    owner: Admin
 }
