@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { ShowService } from './show.service';
 import { ShowController } from './show.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -7,10 +7,11 @@ import { MetadataModule } from '../metadata/metadata.module';
 import { AuthModule } from '../auth/auth.module';
 import { AdminModule } from '../admin/admin.module';
 import { TezosModule } from 'src/tezos/tezos.module';
+import { TezosService } from 'src/tezos/tezos.service';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Show]), MetadataModule, AuthModule, AdminModule, TezosModule],
+    imports: [TypeOrmModule.forFeature([Show]), forwardRef(() => TezosModule), MetadataModule, AuthModule, AdminModule],
     providers: [ShowService],
-    controllers: [ShowController]
+    controllers: [ShowController],
 })
 export class ShowModule { }

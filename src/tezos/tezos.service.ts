@@ -4,10 +4,13 @@ import { validateSignature, verifySignature } from '@taquito/utils';
 import { InMemorySigner } from '@taquito/signer';
 import { IShow } from 'src/show/show.interface';
 import { EventsGateway } from 'src/ws/events/events.gateway';
+import { ShowService } from 'src/show/show.service';
 
 @Injectable()
 export class TezosService {
-    constructor(private eventsGateway: EventsGateway){}
+    constructor(
+        private readonly eventsGateway: EventsGateway,
+        private readonly showService: ShowService){}
 
     verifySignature(signature: string, message: string, publicKey: string): boolean {
         const response = validateSignature(signature);
@@ -37,6 +40,9 @@ export class TezosService {
         const contract = await Tezos.contract.at(process.env.CONTRACT_ADDRESS ?? '');
         const operation = await contract.methods.createConcert(capacity, ownerAddress, ticketPrice).send({amount: parseInt(process.env.CREATION_PRICE_TEZ ?? '1')});
         operation.confirmation(3)
+        .then(() => {
+            return this.showService.updateContractAddress(showId, operation.destination);
+        })
         .then(() => {
             this.eventsGateway.publishCreationResult({
                 created: true,

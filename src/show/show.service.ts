@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException, forwardRef } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Show } from './show.entity';
@@ -6,6 +6,8 @@ import { IShow } from './show.interface';
 import axios from 'axios';
 import { MetadataService } from '../metadata/metadata.service';
 import { TezosService } from 'src/tezos/tezos.service';
+import { AdminService } from 'src/admin/admin.service';
+import { Admin } from 'src/admin/admin.entity';
 
 @Injectable()
 export class ShowService {
@@ -13,15 +15,23 @@ export class ShowService {
         @InjectRepository(Show)
         private showRepository: Repository<Show>,
         private readonly metadataService: MetadataService,
-        private readonly tezosService: TezosService
+        @Inject(forwardRef(() => TezosService))
+        private readonly tezosService: TezosService,
+        private readonly adminService: AdminService,
     ) { }
 
     createShow(walletAddress: string, iShow: IShow): Promise<IShow> {
         const showEntity = new Show();
-        return this.metadataService.sendRequestToPinJson(iShow)
+        let admin: Admin;
+        return this.adminService.findOne(walletAddress)
+            .then(foundAdmin => {
+                admin = foundAdmin;
+                return this.metadataService.sendRequestToPinJson(iShow);
+            })
             .then(cid => {
                 showEntity.cid = cid;
                 showEntity.contractAddress = '';
+                showEntity.owner = admin;
                 return this.showRepository.save(showEntity)
             })
             .then(savedEntity => {
@@ -109,5 +119,13 @@ export class ShowService {
             .then(() => {
                 return iShow;
             })
+    }
+
+    updateContractAddress(id: string, contractAddress: string){
+        return this.showRepository.update({
+            id
+        }, {
+            contractAddress
+        })
     }
 }

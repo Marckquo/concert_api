@@ -2,10 +2,11 @@ import { Controller, Post, UseGuards, Req, Body, Get, Param, NotFoundException, 
 import { AdminGuard } from '../auth/admin.guard';
 import { IShow } from '../show/show.interface';
 import { ShowService } from './show.service';
+import { AuthService } from 'src/auth/auth.service';
 
 @Controller('show')
 export class ShowController {
-    constructor(private readonly showService: ShowService) { }
+    constructor(private readonly showService: ShowService, private readonly authService: AuthService) { }
 
     @UseGuards(AdminGuard)
     @Post()
@@ -36,13 +37,17 @@ export class ShowController {
 
     @UseGuards(AdminGuard)
     @Delete(':id')
-    deleteShow(@Param('id') id: string): Promise<string> {
+    async deleteShow(@Param('id') id: string, @Req() request): Promise<string> {
+        const walletAddress = request.token;
+        await this.authService.canWriteShow(walletAddress, id);
         return this.showService.deleteShow(id);
     }
 
     @UseGuards(AdminGuard)
     @Put(':id')
-    updateShow(@Param('id') id: string, @Body() iShow: IShow): Promise<IShow> {
+    async updateShow(@Param('id') id: string, @Body() iShow: IShow, @Req() request): Promise<IShow> {
+        const walletAddress = request.token;
+        await this.authService.canWriteShow(walletAddress, id);
         return this.showService.editShow(id, iShow);
     }
 }

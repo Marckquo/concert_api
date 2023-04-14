@@ -15,8 +15,11 @@ export class AdminService {
     }
 
     findOne(walletAddress: string): Promise<Admin> {
-        return this.adminRepository.findOneBy({
-            walletAddress
+        return this.adminRepository.findOne({
+            where: {
+                walletAddress
+            },
+            relations: ['shows']
         });
     }
 
