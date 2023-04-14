@@ -1,5 +1,5 @@
-import { Show } from "src/show/show.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Show } from "../show/show.entity";
 
 @Entity()
 export class Admin {

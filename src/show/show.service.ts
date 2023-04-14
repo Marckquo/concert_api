@@ -5,9 +5,9 @@ import { Show } from './show.entity';
 import { IShow } from './show.interface';
 import axios from 'axios';
 import { MetadataService } from '../metadata/metadata.service';
-import { TezosService } from 'src/tezos/tezos.service';
-import { AdminService } from 'src/admin/admin.service';
-import { Admin } from 'src/admin/admin.entity';
+import { TezosService } from '../tezos/tezos.service';
+import { AdminService } from '../admin/admin.service';
+import { Admin } from '../admin/admin.entity';
 
 @Injectable()
 export class ShowService {

@@ -2,7 +2,7 @@ import { Controller, Post, UseGuards, Req, Body, Get, Param, NotFoundException, 
 import { AdminGuard } from '../auth/admin.guard';
 import { IShow } from '../show/show.interface';
 import { ShowService } from './show.service';
-import { AuthService } from 'src/auth/auth.service';
+import { AuthService } from '../auth/auth.service';
 
 @Controller('show')
 export class ShowController {

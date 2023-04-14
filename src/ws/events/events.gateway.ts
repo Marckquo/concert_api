@@ -1,5 +1,5 @@
 import { MessageBody, OnGatewayConnection, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
-import { CreationResult } from 'src/tezos/creation-result.type';
+import { CreationResult } from '../../tezos/creation-result.type';
 import { Server } from 'ws';
 
 interface WsCreationResult {

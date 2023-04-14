@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { TezosToolkit } from '@taquito/taquito';
 import { validateSignature, verifySignature } from '@taquito/utils';
 import { InMemorySigner } from '@taquito/signer';
-import { IShow } from 'src/show/show.interface';
-import { EventsGateway } from 'src/ws/events/events.gateway';
-import { ShowService } from 'src/show/show.service';
+import { IShow } from '../show/show.interface';
+import { EventsGateway } from '../ws/events/events.gateway';
+import { ShowService } from '../show/show.service';
 
 @Injectable()
 export class TezosService {

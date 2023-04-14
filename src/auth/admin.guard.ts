@@ -2,7 +2,7 @@ import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { BearerGuard } from './bearer.guard';
 import { AdminService } from '../admin/admin.service';
-import { TezosService } from 'src/tezos/tezos.service';
+import { TezosService } from '../tezos/tezos.service';
 
 @Injectable()
 export class AdminGuard implements CanActivate {
