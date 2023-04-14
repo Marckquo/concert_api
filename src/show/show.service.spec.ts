@@ -121,7 +121,7 @@ describe('ShowService', () => {
 
       expect(result).toEqual({ ...metadata, id });
       expect(showRepository.findOneBy).toHaveBeenCalledWith({ id });
-      expect(axios.get).toHaveBeenCalledWith(`https://gateway.pinata.cloud/ipfs/${cid}`);
+      expect(axios.get).toHaveBeenCalledWith(`https://gateway.pinata.cloud/ipfs/${cid}`, {"headers": {"Content-Type": "application/json"}});
     });
 
     it('should return null if show not found', async () => {

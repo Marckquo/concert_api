@@ -39,7 +39,7 @@ export class TezosService {
         });
         const contract = await Tezos.contract.at(process.env.CONTRACT_ADDRESS ?? '');
         const operation = await contract.methods.createConcert(capacity, ownerAddress, ticketPrice).send({amount: parseInt(process.env.CREATION_PRICE_TEZ ?? '1')});
-        operation.confirmation(3)
+        return operation.confirmation(3)
         .then(() => {
             return this.showService.updateContractAddress(showId, operation.destination);
         })
