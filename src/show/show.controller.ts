@@ -11,7 +11,7 @@ export class ShowController {
     @UseGuards(AdminGuard)
     @Post()
     createShow(@Body() iShow: IShow, @Req() request): Promise<IShow> {
-        const walletAddress = request.token;
+        const walletAddress = request.walletAddress;
         return this.showService.createShow(walletAddress, iShow);
     }
 
@@ -38,7 +38,7 @@ export class ShowController {
     @UseGuards(AdminGuard)
     @Delete(':id')
     async deleteShow(@Param('id') id: string, @Req() request): Promise<string> {
-        const walletAddress = request.token;
+        const walletAddress = request.walletAddress;
         await this.authService.canWriteShow(walletAddress, id);
         return this.showService.deleteShow(id);
     }
@@ -46,7 +46,7 @@ export class ShowController {
     @UseGuards(AdminGuard)
     @Put(':id')
     async updateShow(@Param('id') id: string, @Body() iShow: IShow, @Req() request): Promise<IShow> {
-        const walletAddress = request.token;
+        const walletAddress = request.walletAddress;
         await this.authService.canWriteShow(walletAddress, id);
         return this.showService.editShow(id, iShow);
     }

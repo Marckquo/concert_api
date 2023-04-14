@@ -5,9 +5,10 @@ import { AdminModule } from '../admin/admin.module';
 import { AuthService } from './auth.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Admin } from 'src/admin/admin.entity';
+import { TezosModule } from 'src/tezos/tezos.module';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Admin]), forwardRef(() => AdminModule)],
+    imports: [TypeOrmModule.forFeature([Admin]), forwardRef(() => AdminModule), forwardRef(() => TezosModule)],
     providers: [BearerGuard, AdminGuard, AuthService],
     exports: [BearerGuard, AdminGuard, AuthService],
 })

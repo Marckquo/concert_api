@@ -19,7 +19,12 @@ export class BearerGuard implements CanActivate {
             return false;
         }
 
-        request.token = token;
+        const [publicKey, walletAddress, signature] = token.split('.');
+
+        request.walletAddress = walletAddress;
+        request.signature = signature;
+        request.publicKey = publicKey;
+
         return true;
     }
 }

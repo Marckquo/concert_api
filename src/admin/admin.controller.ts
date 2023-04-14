@@ -11,7 +11,7 @@ export class AdminController {
     isAdmin(@Req() request): Promise<{
         isAdmin: boolean
     }> {
-        const walletAddress = request.token;
+        const walletAddress = request.walletAddress;
         return this.adminService.isAdmin(walletAddress).then(isAdmin => {
             return {
                 isAdmin
