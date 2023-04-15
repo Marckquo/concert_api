@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { TezosToolkit } from '@taquito/taquito';
+import { OpKind, TezosToolkit } from '@taquito/taquito';
 import { validateSignature, verifySignature } from '@taquito/utils';
 import { InMemorySigner } from '@taquito/signer';
 import { IShow } from '../show/show.interface';
 import { EventsGateway } from '../ws/events/events.gateway';
 import { ShowService } from '../show/show.service';
+import { writeFileSync } from 'fs';
+import { inspect } from 'util';
 
 @Injectable()
 export class TezosService {
@@ -39,16 +41,35 @@ export class TezosService {
         });
         const contract = await Tezos.contract.at(process.env.CONTRACT_ADDRESS ?? '');
         const operation = await contract.methods.createConcert(capacity, ownerAddress, ticketPrice).send({amount: parseInt(process.env.CREATION_PRICE_TEZ ?? '1')});
+        let originatedContract;
         return operation.confirmation(3)
         .then(() => {
-            return this.showService.updateContractAddress(showId, operation.destination);
+            let operationResult = operation.operationResults[0];
+            if (operationResult.kind === OpKind.TRANSACTION){
+                let internalResult = operationResult.metadata.internal_operation_results[0];
+                if (internalResult.kind === OpKind.ORIGINATION){
+                    let application = internalResult.result;
+                    if (application.status === 'applied'){
+                        originatedContract = application['originated_contracts'][0]
+                    }
+                }
+            }
+            return this.showService.updateContractAddress(showId, originatedContract);
         })
         .then(() => {
-            this.eventsGateway.publishCreationResult({
-                created: true,
-                showId,
-                address: operation.destination
-            });
+            if (originatedContract){
+                this.eventsGateway.publishCreationResult({
+                    created: true,
+                    showId,
+                    address: originatedContract
+                });
+            }
+            else {
+                this.eventsGateway.publishCreationResult({
+                    created: false,
+                    showId,
+                });
+            }
         })
         .catch(() => {
             this.eventsGateway.publishCreationResult({
